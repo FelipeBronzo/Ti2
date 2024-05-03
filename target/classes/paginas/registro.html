@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Html</title>
+    <link rel="stylesheet" href="../public/assets/css/registro.css">
+</head>
+<body>
+    <div class="register-container">
+
+        <form action="/registro" method="post" >
+            <h2>Registro</h2>
+            <div class="input-group">
+                <label for="fullname">Nome Completo</label>
+                <input type="text" id="nome" name="fullname" required>
+            </div>
+            <div class="input-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="senha" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="confirm_password">Confirme a Senha</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit">Registrar</button>
+        </form>
+        
+    </div>
+    <script src="../public/assets/js/registro.js"></script>
+    
+</body>
+</html>
