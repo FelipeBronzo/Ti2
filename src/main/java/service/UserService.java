@@ -31,4 +31,23 @@ public class UserService {
 
 		return response;
 	}
+
+	public Object login(Request request, Response response) {
+		String email = request.queryParams("emailacesso");
+		String senha = request.queryParams("senhaacesso");
+	
+		User user = userDAO.get(email, senha);
+	
+		if (user != null) {
+			// Cria uma sessão para o usuário
+			Session session = request.session(true);
+			session.attribute("currentUser", user); // Armazena o objeto do usuário na sessão
+			response.redirect("/teste");
+		} else {
+			response.status(401);
+			response.redirect("/registro");
+		}
+	
+		return response;
+	}
 }

@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+<link rel="stylesheet" href="../public/assets/css/login.css">
 </head>
 <body>
-    <div>Cadastro realizado com sucesso.</div>
+<div class="login-container">
+    <h2>Login</h2>
+    <form action="/login" method="post">
+        <div class="input-group">
+            <label for="email">Usuário:</label>
+            <input type="text" id="username" name="emailacesso" required>
+        </div>
+        <div class="input-group">
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="senhaacesso" required>
+        </div>
+        <button type="submit">Entrar</button>
+    </form>
+</div>
+<script src="../public/assets/js/login.js"></script>
 </body>
 </html>

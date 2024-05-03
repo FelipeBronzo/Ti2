@@ -33,4 +33,27 @@ public class UserDAO extends DAO {
 		return status;
 	}
 
+	public User get(String email, String senha) {
+		User user = null;
+
+		try {
+			String sql = "SELECT * FROM usuario WHERE email=? AND senha=?";
+
+			PreparedStatement ps = conexao.prepareStatement(sql);
+			ps.setString(1, email);
+			ps.setString(2, senha);
+
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				user = new User(rs.getInt("id"), rs.getString("nome"), rs.getString("email"),
+						rs.getString("senha") );
+			}
+
+		} catch (SQLException e) {
+			System.err.println(e);
+		}
+
+		return user;
+	}
+
 }

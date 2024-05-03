@@ -24,6 +24,9 @@ public class Aplicacao {
 
         get("/registro",(request,response)-> cadastro(request, response), engine);
 		post("/registro", (request, response) -> userService.registro(request, response));
+
+        get("/login",(request,response) -> login(request,response), engine);
+		post("/login", (request, response) -> userService.login(request, response));
     }
 
         public static ModelAndView cadastro(Request request, Response response) {
@@ -37,5 +40,11 @@ public class Aplicacao {
             }
 
 		    return new ModelAndView(model, "paginas/registro.html");
+	}
+
+    public static ModelAndView login(Request request, Response response) {
+		HashMap<String, Object> model = new HashMap<>();
+
+		return new ModelAndView(model, "paginas/login.html");
 	}
 }
