@@ -1,20 +1,17 @@
-document.getElementById('registerForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+function toggleForm() {
+    const box = document.getElementById('box');
+    const formEstudante = document.getElementById('form-box');
+    const formInstituicao = document.getElementById('form-instituicao');
 
-    var fullname = document.getElementById('fullname').value;
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-    var confirmPassword = document.getElementById('confirm_password').value;
-
-    if (!fullname || !email || !password || !confirmPassword) {
-        alert('Por favor, preencha todos os campos.');
-        return;
+    // Alternar a visibilidade dos formulários
+    if (formEstudante.style.display !== "none") {
+        formEstudante.style.display = "none";
+        formInstituicao.style.display = "block";
+    } else {
+        formEstudante.style.display = "block";
+        formInstituicao.style.display = "none";
     }
 
-    if (password !== confirmPassword) {
-        alert('As senhas não coincidem.');
-        return;
-    }
-
-    alert('Registro realizado com sucesso!');
-});
+    // Alternar a direção do flexbox para mover logo e formulário
+    box.classList.toggle('reverse');
+}

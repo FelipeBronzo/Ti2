@@ -17,7 +17,7 @@ body{
     min-height: 100vh;
 }
 .w50{
-    width: 100%;
+    width: 50%;
     float: left;
     padding-right: 15px;
 }
@@ -31,7 +31,7 @@ body{
     display: flex;
     align-items: center;
     padding: 20px;
-    
+    border-radius: 20px  0 0 20px;
 }
 .img-box img{
     width: 100%;
@@ -41,7 +41,7 @@ body{
     backdrop-filter: blur(40px);
     padding: 30px 40px;
     width: 50%;
-    
+    border-radius: 0 20px 20px 0;
 }
 .form-box h2{
     font-size: 30px;
@@ -79,7 +79,7 @@ form .input-group input{
     transition: all 0.4s ease;
 }
 form .input-group input:focus{
-    border-color: #d2b36d;
+    border-color: #ff008869;
 }
 form .input-group button{
     width: 100%;
@@ -111,12 +111,3 @@ form .input-group button{
         padding: 0;
     }
 }
-
-.box {
-    display: flex;
-    transition: flex-direction 0.5s ease-in-out;
-}
-.box.reverse {
-    flex-direction: row-reverse;
-}
-

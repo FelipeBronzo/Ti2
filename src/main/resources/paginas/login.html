@@ -1,26 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
-<link rel="stylesheet" href="../public/assets/css/login.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/login.css">
+    <title>Login</title>
 </head>
+
 <body>
-<div class="login-container">
-    <h2>Login</h2>
-    <form action="/login" method="post">
-        <div class="input-group">
-            <label for="email">Usuário:</label>
-            <input type="text" id="username" name="emailacesso" required>
+    <div class="box" id="box">
+        <div class="img-box" id="img-box">
+            <img src="/assets/css/logoacademique.png">
         </div>
-        <div class="input-group">
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="senhaacesso" required>
+        <div class="form-box" id="form-box">
+            <h2>Entrar como Estudante</h2>
+            
+            <form action="/login" method="post">
+
+                <div class="input-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="emailAcessoEstudante" placeholder="Digite o seu email" required>
+                </div>
+
+                <div class="input-group w50">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senhaAcessoEstudante" placeholder="Digite sua senha" required>
+                </div>
+
+                <div class="input-group">
+                    <button type="submit">Entrar</button>
+                </div>
+
+                <button onclick="toggleForm()">Trocar Formulário</button>
+
+            </form>
         </div>
-        <button type="submit">Entrar</button>
-    </form>
-</div>
-<script src="../public/assets/js/login.js"></script>
+
+        <div class="form-box form-instituicao" id="form-instituicao" style="display: none;">
+            <h2>Entrar como Instituição</h2>
+        <form action="/login-instituicao" method="post">
+
+            <div class="input-group">
+                <label for="email">E-mail Institucional</label>
+                <input type="email" id="email" name="emailAcessoInstituicao" placeholder="Digite o Email Institucional" required>
+            </div>
+
+            <div class="input-group w50">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senhaAcessoInstituicao" placeholder="Digite sua senha" required>
+            </div>
+
+            <div class="input-group">
+                <button type="submit">Entrar</button>
+
+            </div>
+            <button onclick="toggleForm()">Trocar Formulário</button>
+        </div>
+
+    </div>
+    <script src="/assets/js/login.js"></script>
 </body>
 </html>

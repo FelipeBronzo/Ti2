@@ -23,10 +23,16 @@ public class Aplicacao {
         port(5050);
 
         get("/registro",(request,response)-> cadastro(request, response), engine);
-		post("/registro", (request, response) -> userService.registro(request, response));
+		post("/registro", (request, response) -> userService.registroEstudantes(request, response));
+
+        get("/registro-instituicao",(request,response)-> cadastro(request, response), engine);
+		post("/registro-instituicao", (request, response) -> userService.registroInstituicoes(request, response));
 
         get("/login",(request,response) -> login(request,response), engine);
-		post("/login", (request, response) -> userService.login(request, response));
+		post("/login", (request, response) -> userService.loginEstudante(request, response));
+
+        get("/login-instituicao",(request,response) -> login(request,response), engine);
+		post("/login-instituicao", (request, response) -> userService.loginInstituicao(request, response));
     }
 
         public static ModelAndView cadastro(Request request, Response response) {
