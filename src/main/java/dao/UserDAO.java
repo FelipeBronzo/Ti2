@@ -1,6 +1,8 @@
 package dao;
 
 import java.sql.*;
+import java.util.Map;
+
 import model.User;
 import model.UserInstituicao;
 
@@ -73,7 +75,8 @@ public class UserDAO extends DAO {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				user = new User(rs.getInt("id"), rs.getString("nomecompleto"), rs.getString("email"),
-						rs.getString("senha"), rs.getString("telefone") );
+						rs.getString("senha"), rs.getString("telefone"), rs.getString("nome_faculdade"), rs.getString("descricao"), 
+						rs.getString("curso"), rs.getInt("ano_previsto_conclusao"));
 			}
 
 		} catch (SQLException e) {
@@ -105,5 +108,58 @@ public class UserDAO extends DAO {
 
 		return userInstituicao;
 	}
+
+	public boolean completarRegistro(int id, String nomeFaculdade, String descricao, String curso, int anoPrevistoConclusao) {
+        boolean status = false;
+        try {
+            String sql = "UPDATE usuariosestudantes SET nome_faculdade=?, descricao=?, curso=?, ano_previsto_conclusao=? WHERE id=?";
+            PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+            preparedStatement.setString(1, nomeFaculdade);
+            preparedStatement.setString(2, descricao);
+            preparedStatement.setString(3, curso);
+            preparedStatement.setInt(4, anoPrevistoConclusao);
+            preparedStatement.setInt(5, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            status = true;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return status;
+    }
+
+    public User getUserById(int id) {
+        User user = null;
+        try {
+            String sql = "SELECT * FROM usuariosestudantes WHERE id=?";
+            PreparedStatement ps = conexao.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User(rs.getInt("id"), rs.getString("nomecompleto"), rs.getString("email"), rs.getString("senha"), 
+				rs.getString("telefone"), rs.getString("nome_faculdade"), rs.getString("descricao"), rs.getString("curso"), 
+				rs.getInt("ano_previsto_conclusao"));
+            }
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return user;
+    }
+
+	public boolean deletarUsuario(int id) {
+        boolean status = false;
+        try {
+            String sql = "DELETE FROM usuariosestudantes WHERE id=?";
+            PreparedStatement preparedStatement = conexao.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            status = true;
+        } catch (SQLException e) {
+            System.err.println(e);
+        }
+        return status;
+    }
+
 
 }

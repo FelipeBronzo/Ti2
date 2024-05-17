@@ -22,7 +22,6 @@
             width: 80%;
             max-width: 800px;
             margin: auto;
-            position: relative;
         }
         .profile-container h2 {
             text-align: center;
@@ -49,60 +48,27 @@
             border-radius: 4px;
             font-size: 16px;
         }
-        .profile-container .field-container button {
+        .profile-container .field-container span {
+            width: 75%;
             padding: 10px;
-            background-color: #d2b36d;
-            color: white;
-            border: none;
+            border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
-            cursor: pointer;
+            background-color: #f7f7f7;
         }
-        .profile-container .field-container button:hover {
-            background-color: #b39654;
-        }
-        .profile-container .popup {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
+        .profile-container .complete-registration {
+            margin-top: 20px;
             padding: 20px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-            width: 80%;
-            max-width: 400px;
+            background-color: #fffbe6;
             border-radius: 8px;
-        }
-        .profile-container .popup.active {
-            display: block;
-        }
-        .profile-container .popup h3 {
-            margin-top: 0;
-        }
-        .profile-container .popup input,
-        .profile-container .popup textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
         }
-        .profile-container .popup button {
-            width: 100%;
-            padding: 10px;
-            background-color: #5c6bc0;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
+        .profile-container .complete-registration h3 {
+            text-align: center;
+            color: #ff9800;
         }
-        .profile-container .popup button:hover {
-            background-color: #3f51b5;
+        .delete-button{
+            margin-top: 4%;
         }
     </style>
 </head>
@@ -110,72 +76,63 @@
     <div class="profile-container">
         <h2>Perfil do Usuário</h2>
         <div class="field-container">
-            <label for="nomecompleto">Nome Completo</label>
-            <input type="text" id="nomecompleto" name="nomecompleto" value="$!{usuario.nomeCompleto}" readonly>
-            <button type="button" onclick="openPopup('nomecompleto')">Editar</button>
+            <label for="nomecompleto">Nome Completo:</label>
+            <span id="nomecompleto">$!{usuario.nome}</span>
         </div>
         <div class="field-container">
-            <label for="email">E-mail</label>
-            <input type="email" id="email" name="email" value="$!{usuario.email}" readonly>
-            <button type="button" onclick="openPopup('email')">Editar</button>
+            <label for="email">E-mail:</label>
+            <span id="email">$!{usuario.email}</span>
         </div>
         <div class="field-container">
-            <label for="telefone">Telefone</label>
-            <input type="tel" id="telefone" name="telefone" value="$!{usuario.telefone}" readonly>
-            <button type="button" onclick="openPopup('telefone')">Editar</button>
+            <label for="telefone">Telefone:</label>
+            <span id="telefone">$!{usuario.telefone}</span>
         </div>
         <div class="field-container">
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" value="******" readonly>
-            <button type="button" onclick="openPopup('senha')">Editar</button>
+            <label for="nome_faculdade">Nome da Faculdade:</label>
+            <span id="nome_faculdade">#if($usuario.nome_faculdade) $!{usuario.nome_faculdade} #else *Adicione o nome da faculdade #end</span>
         </div>
         <div class="field-container">
-            <label for="nome_faculdade">Nome da Faculdade</label>
-            <input type="text" id="nome_faculdade" name="nome_faculdade" value="$!{usuario.nomeFaculdade}" readonly>
-            <button type="button" onclick="openPopup('nome_faculdade')">Editar</button>
+            <label for="descricao">Descrição:</label>
+            <span id="descricao">#if($usuario.descricao) $!{usuario.descricao} #else *Adicione uma descrição #end</span>
         </div>
         <div class="field-container">
-            <label for="descricao">Descrição</label>
-            <textarea id="descricao" name="descricao" readonly>$!{usuario.descricao}</textarea>
-            <button type="button" onclick="openPopup('descricao')">Editar</button>
+            <label for="curso">Curso:</label>
+            <span id="curso">#if($usuario.curso) $!{usuario.curso} #else *Adicione o nome do curso #end</span>
         </div>
         <div class="field-container">
-            <label for="curso">Curso</label>
-            <input type="text" id="curso" name="curso" value="$!{usuario.curso}" readonly>
-            <button type="button" onclick="openPopup('curso')">Editar</button>
+            <label for="ano_previsto_conclusao">Ano Previsto para Conclusão:</label>
+            <span id="ano_previsto_conclusao">#if($usuario.ano_previsto_conclusao) $!{usuario.ano_previsto_conclusao} #else *Adicione o ano previsto para conclusão #end</span>
         </div>
-        <div class="field-container">
-            <label for="ano_previsto_conclusao">Ano Previsto para Conclusão</label>
-            <input type="text" id="ano_previsto_conclusao" name="ano_previsto_conclusao" value="$!{usuario.anoPrevistoConclusao}" readonly>
-            <button type="button" onclick="openPopup('ano_previsto_conclusao')">Editar</button>
-        </div>
-    </div>
-    
-    <!-- Pop-up form -->
-    <div class="popup" id="popup">
-        <h3>Editar <span id="field-name"></span></h3>
-        <form id="popup-form" action="/updateProfile" method="post">
-            <input type="hidden" id="field-id" name="field-id">
-            <input type="text" id="field-value" name="field-value">
-            <button type="submit">Salvar</button>
-        </form>
-    </div>
 
-    <script>
-        function openPopup(field) {
-            document.getElementById('popup').classList.add('active');
-            document.getElementById('field-name').innerText = field;
-            document.getElementById('field-id').value = field;
-            document.getElementById('field-value').value = document.getElementById(field).value;
-        }
-        
-        // Close the popup when clicking outside of it
-        window.onclick = function(event) {
-            const popup = document.getElementById('popup');
-            if (event.target === popup) {
-                popup.classList.remove('active');
-            }
-        }
-    </script>
+        <div class="complete-registration">
+            <h3>Complete ou Edite o Registro</h3>
+            <form id="complete-registration-form" action="/completarRegistro" method="post">
+                <input type="hidden" id="id" name="id" value="$!{usuario.id}">
+                <div class="field-container">
+                    <label for="nome_faculdade_input">Nome da Faculdade:</label>
+                    <input type="text" id="nome_faculdade_input" name="nome_faculdade" placeholder="Nome da Faculdade" value="$!{usuario.nome_faculdade}">
+                </div>
+                <div class="field-container">
+                    <label for="descricao_input">Descrição:</label>
+                    <textarea id="descricao_input" name="descricao" placeholder="Descrição sobre você">$!{usuario.descricao}</textarea>
+                </div>
+                <div class="field-container">
+                    <label for="curso_input">Curso:</label>
+                    <input type="text" id="curso_input" name="curso" placeholder="Nome do Curso" value="$!{usuario.curso}">
+                </div>
+                <div class="field-container">
+                    <label for="ano_previsto_conclusao_input">Ano Previsto para Conclusão:</label>
+                    <input type="text" id="ano_previsto_conclusao_input" name="ano_previsto_conclusao" placeholder="Ano Previsto para Conclusão" value="$!{usuario.ano_previsto_conclusao}">
+                </div>
+                <button type="submit">Salvar</button>
+            </form>
+        </div>
+
+        <form id="delete-user-form" action="/deletarUsuario" method="post">
+            <input type="hidden" id="id" name="id" value="$!{usuario.id}">
+            <button type="submit" class="delete-button">Deletar Conta</button>
+        </form>
+
+    </div>
 </body>
 </html>

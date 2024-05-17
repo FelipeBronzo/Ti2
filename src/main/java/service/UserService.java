@@ -8,6 +8,8 @@ import model.UserInstituicao;
 
 import java.security.*;
 import java.time.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.jetty.server.LocalConnector;
 
@@ -29,6 +31,7 @@ public class UserService {
 
 		if (userDAO.inserirEstudantes(user) == true) {
         request.session().attribute("message", "Usuário cadastrado com sucesso!");
+		response.redirect("/login");
 		} else {
         request.session().attribute("message", "Erro ao cadastrar usuário");
 		}
@@ -65,7 +68,7 @@ public class UserService {
 			// Cria uma sessão para o usuário
 			Session session = request.session(true);
 			session.attribute("currentUser", user); // Armazena o objeto do usuário na sessão
-			response.redirect("/teste");
+			response.redirect("/perfil");
 		} else {
 			response.status(401);
 			response.redirect("/registro");
@@ -84,7 +87,7 @@ public class UserService {
 			// Cria uma sessão para o usuário
 			Session session = request.session(true);
 			session.attribute("currentUser", user); // Armazena o objeto do usuário na sessão
-			response.redirect("/teste");
+			response.redirect("/perfil");
 		} else {
 			response.status(401);
 			response.redirect("/registro");
@@ -92,5 +95,45 @@ public class UserService {
 	
 		return response;
 	}
+
+	public Object completarRegistro(Request request, Response response) {
+        int id = Integer.parseInt(request.queryParams("id"));
+        String nomeFaculdade = request.queryParams("nome_faculdade");
+        String descricao = request.queryParams("descricao");
+        String curso = request.queryParams("curso");
+        int anoPrevistoConclusao = Integer.parseInt(request.queryParams("ano_previsto_conclusao"));
+
+        boolean updateSuccess = userDAO.completarRegistro(id, nomeFaculdade, descricao, curso, anoPrevistoConclusao);
+
+        if (updateSuccess) {
+            User updatedUser = userDAO.getUserById(id);
+            request.session().attribute("currentUser", updatedUser);
+            request.session().attribute("message", "Registro completado com sucesso!");
+        } else {
+            request.session().attribute("message", "Erro ao completar registro");
+        }
+
+        response.redirect("/perfil");
+        return response;
+    }
+
+	public Object deletarUsuario(Request request, Response response) {
+        int id = Integer.parseInt(request.queryParams("id"));
+        boolean deleteSuccess = userDAO.deletarUsuario(id);
+
+        if (deleteSuccess) {
+            request.session().removeAttribute("currentUser");
+            request.session().attribute("message", "Usuário deletado com sucesso!");
+        } else {
+            request.session().attribute("message", "Erro ao deletar usuário");
+        }
+
+        response.redirect("/login");
+        return response;
+    }
+
+	public User getCurrentUser(Request request) {
+        return request.session().attribute("currentUser");
+    }
 
 }

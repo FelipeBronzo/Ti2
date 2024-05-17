@@ -33,6 +33,13 @@ public class Aplicacao {
 
         get("/login-instituicao",(request,response) -> login(request,response), engine);
 		post("/login-instituicao", (request, response) -> userService.loginInstituicao(request, response));
+
+        get("/perfil", (request, response) -> perfil(request, response), engine);
+
+        // Rota para completar o registro do usuário
+        post("/completarRegistro", (request, response) -> userService.completarRegistro(request, response));
+
+        post("/deletarUsuario", (request, response) -> userService.deletarUsuario(request, response));
     }
 
         public static ModelAndView cadastro(Request request, Response response) {
@@ -53,4 +60,15 @@ public class Aplicacao {
 
 		return new ModelAndView(model, "paginas/login.html");
 	}
+
+    public static ModelAndView perfil(Request request, Response response) {
+        User currentUser = request.session().attribute("currentUser");
+        if (currentUser == null) {
+            response.redirect("/login");
+            halt();
+        }
+        HashMap<String, Object> model = new HashMap<>();
+        model.put("usuario", currentUser);
+        return new ModelAndView(model, "paginas/perfil.vm");
+    }
 }
